@@ -1409,6 +1409,13 @@ MavlinkMissionManager::parse_mavlink_mission_item(const mavlink_mission_item_t *
 			}
 			break;
 
+		case MAV_CMD_DO_MOUNT_CONTROL:
+			mission_item->nav_cmd = (NAV_CMD)mavlink_mission_item->command;
+
+			// Transform from ENU to NED frame
+			mission_item->params[2] = -mavlink_mission_item->param3;
+			break;
+
 		case MAV_CMD_DO_CHANGE_SPEED:
 		case MAV_CMD_DO_SET_HOME:
 		case MAV_CMD_DO_SET_SERVO:
@@ -1416,7 +1423,6 @@ MavlinkMissionManager::parse_mavlink_mission_item(const mavlink_mission_item_t *
 		case MAV_CMD_DO_TRIGGER_CONTROL:
 		case MAV_CMD_DO_DIGICAM_CONTROL:
 		case MAV_CMD_DO_MOUNT_CONFIGURE:
-		case MAV_CMD_DO_MOUNT_CONTROL:
 		case MAV_CMD_IMAGE_START_CAPTURE:
 		case MAV_CMD_IMAGE_STOP_CAPTURE:
 		case MAV_CMD_VIDEO_START_CAPTURE:
