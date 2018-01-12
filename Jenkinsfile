@@ -15,7 +15,7 @@ pipeline {
             builds["${node_name}"] = {
               node {
                 stage("Build Test ${node_name}") {
-                  docker.image('px4io/px4-dev-nuttx:2017-12-30').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
+                  docker.image('px4io/px4-dev-nuttx:pr-nuttx_gcc7').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
                     stage("${node_name}") {
                       checkout scm
                       sh "make distclean"
@@ -38,7 +38,7 @@ pipeline {
           builds["px4fmu-v2"] = {
             node {
               stage("Build Test ${node_name}") {
-                docker.image('px4io/px4-dev-nuttx:2017-12-30').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
+                docker.image('px4io/px4-dev-nuttx:pr-nuttx_gcc7').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
                   stage("${node_name}") {
                     checkout scm
                     sh "make distclean"
@@ -66,7 +66,7 @@ pipeline {
             builds["${node_name}"] = {
               node {
                 stage("Build Test ${node_name}") {
-                  docker.image('px4io/px4-dev-nuttx:2017-12-30').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
+                  docker.image('px4io/px4-dev-nuttx:pr-nuttx_gcc7').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
                     stage("${node_name}") {
                       checkout scm
                       sh "make distclean"
@@ -91,7 +91,7 @@ pipeline {
             builds["${node_name}"] = {
               node {
                 stage("Build Test ${node_name}") {
-                  docker.image('px4io/px4-dev-nuttx:2017-12-30').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
+                  docker.image('px4io/px4-dev-nuttx:pr-nuttx_gcc7').inside('-e CI=true -e CCACHE_BASEDIR=$WORKSPACE -e CCACHE_DIR=/tmp/ccache -v /tmp/ccache:/tmp/ccache:rw') {
                     stage("${node_name}") {
                       checkout scm
                       sh "make distclean"
