@@ -41,6 +41,7 @@
  */
 
 #include <px4_config.h>
+#include <px4_workqueue.h>
 #include <px4_getopt.h>
 
 #include <sys/types.h>
@@ -56,10 +57,6 @@
 #include <math.h>
 #include <unistd.h>
 #include <termios.h>
-
-#include <nuttx/arch.h>
-#include <nuttx/wqueue.h>
-#include <nuttx/clock.h>
 
 #include <systemlib/perf_counter.h>
 #include <systemlib/err.h>
@@ -94,8 +91,8 @@ public:
 
 	virtual int 			init();
 
-	virtual ssize_t			read(struct file *filp, char *buffer, size_t buflen);
-	virtual int			ioctl(struct file *filp, int cmd, unsigned long arg);
+	virtual ssize_t			read(device::file_t *filp, char *buffer, size_t buflen);
+	virtual int			ioctl(device::file_t *filp, int cmd, unsigned long arg);
 
 	/**
 	* Diagnostics - print some basic information about the driver.
@@ -362,7 +359,7 @@ TFMINI::get_maximum_distance()
 }
 
 int
-TFMINI::ioctl(struct file *filp, int cmd, unsigned long arg)
+TFMINI::ioctl(device::file_t *filp, int cmd, unsigned long arg)
 {
 	switch (cmd) {
 
@@ -439,14 +436,14 @@ TFMINI::ioctl(struct file *filp, int cmd, unsigned long arg)
 				return -EINVAL;
 			}
 
-			irqstate_t flags = px4_enter_critical_section();
+			ATOMIC_ENTER;
 
 			if (!_reports->resize(arg)) {
-				px4_leave_critical_section(flags);
+				ATOMIC_LEAVE;
 				return -ENOMEM;
 			}
 
-			px4_leave_critical_section(flags);
+			ATOMIC_LEAVE;
 
 			return OK;
 		}
@@ -462,7 +459,7 @@ TFMINI::ioctl(struct file *filp, int cmd, unsigned long arg)
 }
 
 ssize_t
-TFMINI::read(struct file *filp, char *buffer, size_t buflen)
+TFMINI::read(device::file_t *filp, char *buffer, size_t buflen)
 {
 	unsigned count = buflen / sizeof(struct distance_sensor_s);
 	struct distance_sensor_s *rbuf = reinterpret_cast<struct distance_sensor_s *>(buffer);
@@ -967,5 +964,6 @@ tfmini_main(int argc, char *argv[])
 		tfmini::info();
 	}
 
-	errx(1, "unrecognized command, try 'start', 'test', 'reset' or 'info'");
+	PX4_ERR("unrecognized command, try 'start', 'test', 'reset' or 'info'");
+	return PX4_ERROR;
 }

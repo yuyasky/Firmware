@@ -28,8 +28,7 @@ set(config_module_list
 	drivers/iridiumsbd
 	drivers/led
 	drivers/lis3mdl
-	drivers/ll40ls
-	drivers/mb12xx
+	drivers/distance_sensor
 	drivers/mkblctrl
 	drivers/mpu6000
 	drivers/mpu9250
@@ -41,17 +40,12 @@ set(config_module_list
 	drivers/px4flow
 	drivers/px4fmu
 	drivers/rgbled
-	drivers/sf0x
-	drivers/sf1xx
-	drivers/srf02
 	drivers/stm32
 	drivers/stm32/adc
 	drivers/stm32/tone_alarm
 	drivers/tap_esc
-	drivers/teraranger
 	drivers/vmount
 	modules/sensors
-	drivers/tfmini
 
 	#
 	# System commands
@@ -78,7 +72,7 @@ set(config_module_list
 	#
 	# Testing
 	#
-	drivers/sf0x/sf0x_tests
+	drivers/distance_sensor/sf0x/sf0x_tests
 	drivers/test_ppm
 	#lib/rc/rc_tests
 	modules/commander/commander_tests
