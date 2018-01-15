@@ -17,7 +17,6 @@ set(config_module_list
 	drivers/bst
 	drivers/camera_trigger
 	drivers/device
-	drivers/ets_airspeed
 	drivers/frsky_telemetry
 	drivers/gps
 	drivers/hmc5883
@@ -33,8 +32,7 @@ set(config_module_list
 	drivers/mkblctrl
 	drivers/mpu6000
 	drivers/mpu9250
-	drivers/ms4525_airspeed
-	drivers/ms5525_airspeed
+	drivers/differential_pressure
 	drivers/ms5611
 	drivers/oreoled
 	drivers/pwm_input
@@ -43,7 +41,6 @@ set(config_module_list
 	drivers/px4fmu
 	drivers/rgbled
 	drivers/rgbled_pwm
-	drivers/sdp3x_airspeed
 	drivers/sf0x
 	drivers/sf1xx
 	drivers/srf02
